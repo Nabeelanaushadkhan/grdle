@@ -1,17 +1,19 @@
-plugins {
-    id 'java'
-    id 'application'
-}
+pipeline {
+    agent any
 
-repositories {
-    mavenCentral()
-}
+    stages {
 
-dependencies {
-    implementation 'com.google.guava:guava:23.0'
-    testImplementation 'junit:junit:4.13.2'
-}
+        stage('Build & Test') {
+            steps {
+                sh 'chmod +x gradlew'
+                sh './gradlew build'
+            }
+        }
 
-application {
-    mainClass = 'com.example.App'
+        stage('Run') {
+            steps {
+                sh './gradlew run'
+            }
+        }
+    }
 }
